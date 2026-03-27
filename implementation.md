@@ -88,6 +88,17 @@ activity-cliffs/
 
 ---
 
+## Key Concepts
+
+- **Structure-Activity Landscape Index (SALI)** quantifies activity cliffs as `|delta_pIC50| / (1 - Tanimoto)` -- high values indicate pairs where a small structural change causes a large potency shift
+- **pIC50 transformation** converts IC50 values to a log scale (`pIC50 = -log10(IC50_M)`) so that activity differences are additive and comparable across orders of magnitude
+- **Tanimoto similarity** from Morgan fingerprints measures structural resemblance; SALI amplifies activity differences between structurally similar compounds (denominator near zero)
+- **Automatic cliff thresholding** using mean + 1 standard deviation of SALI scores provides an objective cutoff without manual tuning, though domain experts may override it
+- **Upper-triangle iteration** over the N x N SALI matrix avoids double-counting symmetric pairs and excludes the diagonal (self-comparisons)
+- **Divergence guard** is required when Tanimoto = 1.0 (identical compounds), where SALI is undefined -- these cells are set to NaN rather than infinity
+
+---
+
 ## 3. Input CSV — Added Column
 
 ```
